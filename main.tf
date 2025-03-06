@@ -39,7 +39,7 @@ resource "azurerm_public_ip" "az-pip" {
 }
 
 resource "azurerm_network_interface" "az-ni" {
-    name = "manual-az-vm549-${var.vm_names[count.index]}"
+    name = "manual-az-vm549-${var.vm_name[count.index]}"
     location = azurerm_resource_group.az-rg.location
     resource_group_name = azurerm_resource_group.az-rg.name
     ip_configuration {
