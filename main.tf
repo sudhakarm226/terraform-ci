@@ -32,7 +32,7 @@ resource "azurerm_subnet" "az-sub" {
 
 resource "azurerm_public_ip" "az-pip" {
   count               = length(var.vm_name)
-  name                = "vm-public-ip${var.vm_names[count.index]}"
+  name                = "vm-public-ip${var.vm_name[count.index]}"
   location            = azurerm_resource_group.az-rg.location
   resource_group_name = azurerm_resource_group.az-rg.name
   sku                 = "Basic"  # ✅ Must be Basic for Dynamic
