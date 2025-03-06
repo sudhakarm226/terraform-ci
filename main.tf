@@ -9,6 +9,7 @@ provider "azurerm" {
 
 variable "vm_name" {
   type = string
+  default = ["vm1", "vm2"]
 }
 resource "azurerm_resource_group" "az-rg" {
   name = "RG_VMs"
@@ -59,7 +60,7 @@ resource "azurerm_linux_virtual_machine" "new-vm" {
   admin_password = "azureuser@123"
   disable_password_authentication = false
   location = azurerm_resource_group.az-rg.location
-  name = var.vm_name
+  name = var.vm_name[count.index]
   source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
