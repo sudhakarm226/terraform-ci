@@ -9,7 +9,6 @@ provider "azurerm" {
 
 variable "vm_name" {
   type = list(string)
-  default = ["vm1", "vm2"]
 }
 resource "azurerm_resource_group" "az-rg" {
   name = "RG_VMs"
@@ -40,7 +39,7 @@ resource "azurerm_public_ip" "az-pip" {
 }
 
 resource "azurerm_network_interface" "az-ni" {
-    name = "manual-az-vm549"
+    name = "manual-az-vm549-${var.vm_names[count.index]}"
     location = azurerm_resource_group.az-rg.location
     resource_group_name = azurerm_resource_group.az-rg.name
     ip_configuration {
@@ -56,7 +55,7 @@ resource "azurerm_network_interface" "az-ni" {
 resource "azurerm_linux_virtual_machine" "new-vm" {
   count = length(var.vm_name)
   resource_group_name = azurerm_resource_group.az-rg.name
-  network_interface_ids = [azurerm_network_interface.az-ni.id]
+  network_interface_ids = [azurerm_network_interface.az-ni[count.index].id]
   admin_username = "azureuser"
   admin_password = "azureuser@123"
   disable_password_authentication = false
