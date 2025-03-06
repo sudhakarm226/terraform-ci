@@ -8,7 +8,7 @@ provider "azurerm" {
 
 
 variable "vm_name" {
-  type = string
+  type = list(string)
   default = ["vm1", "vm2"]
 }
 resource "azurerm_resource_group" "az-rg" {
