@@ -6,6 +6,10 @@ provider "azurerm" {
   #client_secret = "rgy8Q~xLrwN1ptmTRTDJkRvTIXgApZ9ZPLb37cG6"
 }
 
+
+variable "vm_name" {
+  type = string
+}
 resource "azurerm_resource_group" "az-rg" {
   name = "RG_VMs"
   location = "South India"
@@ -55,7 +59,7 @@ resource "azurerm_linux_virtual_machine" "new-vm" {
   admin_password = "azureuser@123"
   disable_password_authentication = false
   location = azurerm_resource_group.az-rg.location
-  name = "new-vm123"
+  name = var.vm_name
   source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
