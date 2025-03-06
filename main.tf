@@ -31,7 +31,8 @@ resource "azurerm_subnet" "az-sub" {
 
 
 resource "azurerm_public_ip" "az-pip" {
-  name                = "vm-public-ip"
+  count               = length(var.vm_name)
+  name                = "vm-public-ip${var.vm_names[count.index]}"
   location            = azurerm_resource_group.az-rg.location
   resource_group_name = azurerm_resource_group.az-rg.name
   sku                 = "Basic"  # ✅ Must be Basic for Dynamic
@@ -47,7 +48,7 @@ resource "azurerm_network_interface" "az-ni" {
       name = "ipconfig1"
       subnet_id = azurerm_subnet.az-sub.id
       private_ip_address_allocation = "Dynamic"
-      public_ip_address_id          = azurerm_public_ip.az-pip.id
+      public_ip_address_id          = azurerm_public_ip.az-pip[count.index].id
 
     }
     depends_on = [ azurerm_subnet.az-sub ]
