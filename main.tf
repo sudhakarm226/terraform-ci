@@ -54,6 +54,7 @@ resource "azurerm_network_interface" "az-ni" {
 }
 
 resource "azurerm_linux_virtual_machine" "new-vm" {
+  count = length(var.vm_names)
   resource_group_name = azurerm_resource_group.az-rg.name
   network_interface_ids = [azurerm_network_interface.az-ni.id]
   admin_username = "azureuser"
