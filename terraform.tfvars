@@ -1,0 +1,1 @@
+vm_name = ["newvm1","newvm2"]
